@@ -49,8 +49,6 @@ function onImagesGalleryClick(evt) {
   if (evt.target.nodeName !== 'IMG') {
     return;
   }
-  console.log(evt.target);
-
   modal.classList.add('is-open');
 
   modalImage.src = evt.target.dataset.source;
@@ -61,8 +59,8 @@ function modalClose() {
   modalImage.src = '';
   modalImage.alt = '';
 }
-function modalEscClose(e) {
-  if (e.keyCode === 27) {
+function modalEscClose(evt) {
+  if (evt.keyCode === 27) {
     modalClose();
   }
 }
