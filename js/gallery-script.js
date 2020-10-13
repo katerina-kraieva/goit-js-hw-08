@@ -7,6 +7,8 @@ const modalCloseBtn = document.querySelector('[data-action="close-lightbox"]');
 const modalOverlay = document.querySelector('.lightbox__overlay');
 
 const imagesMarkup = createImageCards(imagesArr);
+const UrlsArr = imagesArr.map((el) => el.original);
+console.log(UrlsArr);
 
 // создание и рендер разметки
 imagesGallery.insertAdjacentHTML('beforeend', imagesMarkup);
@@ -22,6 +24,9 @@ document.addEventListener('keydown', modalEscClose);
 
 //зактрытие по оверлэю
 modalOverlay.addEventListener('click', onModalOverlayClick);
+
+//листаем галерею кнопками клавиатуры (содрано, разобраться)
+document.addEventListener('keydown', keyboardPress);
 
 function createImageCards(images) {
   return images
@@ -60,12 +65,35 @@ function modalClose() {
   modalImage.alt = '';
 }
 function modalEscClose(evt) {
-  if (evt.keyCode === 27) {
+  if (evt.key === "Escape") {
     modalClose();
   }
 }
 function onModalOverlayClick(evt) {
   if (evt.currentTarget === evt.target) {
     modalClose();
+  }
+}
+function keyboardPress(event) {
+  if (event.key === "ArrowRight") {
+    for (let i = 0; i < UrlsArr.length; i += 1) {
+      if (modalImage.src === UrlsArr[8]) {
+        modalImage.src = `${UrlsArr[0]}`;
+        return;
+      } else if (modalImage.src === UrlsArr[i]) {
+        modalImage.src = `${UrlsArr[i + 1]}`;
+        return;
+      }
+    }
+  } else if (event.key === "ArrowLeft") {
+    for (let i = 0; i < UrlsArr.length; i += 1) {
+      if (modalImage.src === UrlsArr[0]) {
+        modalImage.src = `${UrlsArr[8]}`;
+        return;
+      } else if (modalImage.src === UrlsArr[i]) {
+        modalImage.src = `${UrlsArr[i - 1]}`;
+        return;
+      }
+    }
   }
 }
